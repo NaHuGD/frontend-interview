@@ -23,7 +23,13 @@ export function mockFetch({
   }
 }
 
-function onSuccess({ page, pageSize }: { page: number; pageSize: number }): Promise<AccountData[]> {
+function onSuccess({
+  page,
+  pageSize,
+}: {
+  page: number;
+  pageSize: number;
+}): Promise<AccountData[]> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(mockData.slice((page - 1) * pageSize, page * pageSize));
