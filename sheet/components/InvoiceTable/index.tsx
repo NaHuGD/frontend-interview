@@ -82,16 +82,16 @@ const TableRow: React.FC<TableRowProps> = ({
   const isChecked = selectedIds.includes(id);
 
   return (
-    <tr className="border-other-divider border-b">
-      <td>
+    <tr className="border-other-divider h-12.5 border">
+      <td className="h-10.5 w-10.5 py-1 pl-2 text-center">
         <input
           type="checkbox"
-          className="border-secondary-68"
+          className="border-secondary-68 h-4.5 w-4.5"
           checked={isChecked}
           onChange={() => onSelectedIdsChange(id)}
         />
       </td>
-      <td className="text-primary-main text-sm font-normal">
+      <td className="text-primary-main text-center text-sm font-normal">
         #{id.toString().padStart(4, '0')}
       </td>
       <td>
@@ -105,13 +105,13 @@ const TableRow: React.FC<TableRowProps> = ({
           </div>
         </div>
       </td>
-      <td className="text-secondary-68 text-sm font-medium">
+      <td className="text-secondary-68 pl-5 text-sm font-medium">
         {formatCurrency(totalBalance)}
       </td>
-      <td className="text-secondary-68 text-sm font-medium">
+      <td className="text-secondary-68 pl-5 text-sm font-medium">
         {formatTimestampToDate(issueDate)}
       </td>
-      <td>
+      <td className="pr-5 text-center">
         {isBalanceVisible ? (
           <span className="text-primary-87 text-sm font-normal">
             {formatCurrency(balance)}
@@ -121,7 +121,7 @@ const TableRow: React.FC<TableRowProps> = ({
         )}
       </td>
       <td>
-        <div className="flex space-x-2">
+        <div className="flex justify-center space-x-10 pr-4">
           <button
             title="delete"
             className="cursor-pointer"
@@ -155,7 +155,7 @@ const TableContainer: React.FC<TableContainerProps> = ({
 }) => {
   if (shouldShowError) return null;
 
-  const isEmptyData = responseData?.data.length === 0;
+  const isEmptyData = responseData?.data.length === 0 && !isFetching;
   const isHiddenCheckbox = isEmptyData || shouldShowError || isFetching;
   const { data } = responseData || {};
 
@@ -165,7 +165,7 @@ const TableContainer: React.FC<TableContainerProps> = ({
         {/* Table Header */}
         <thead className="border-b border-gray-200 bg-gray-50">
           <tr className="h-13.5">
-            <th className="pl-2">
+            <th className="h-10.5 w-10.5 py-1 pl-2 text-center">
               {!isHiddenCheckbox && (
                 <input
                   type="checkbox"
@@ -329,6 +329,7 @@ export default function InvoiceTable() {
           ...prev,
           value,
         }));
+        setSelectedIds([]);
       },
       // 300ms debounce
       300
